@@ -1,0 +1,54 @@
+== URLs
+
+Guidelines for naming and designing resource paths and query parameters.
+
+=== [.danger]#MUST# pluralize resource names
+
+We must use plural nouns for resource names.
+
+.Example:
+[source,http]
+----
+POST /orders
+GET /orders/{id}
+GET /companies/{id}/users
+GET /companies/{company-id}/users/{user-id}
+----
+
+=== [.danger]#MUST# use kebab-case for path segments
+
+We must use `kebab-case` for path segments.
+This means keeping all letters lowercase and separating words with a hyphen.
+
+.Example:
+[source,http]
+----
+GET /user-channels
+GET /sales-orders/{id}
+----
+
+=== [.danger]#MUST# keep URLs verbs-free
+
+The API describes resources, so the only place where actions should appear is in the HTTP methods.
+In URLs, we must use only nouns.
+
+.OrderController:
+[source,java]
+----
+@PostMapping("/orders")
+public void createOrder(Order order) {
+	// Code implementation...
+}
+----
+
+=== [.warning]#SHOULD# not include `Paginated` & `Pageable` in resource name
+
+All resources that returns a list should be paginated by default.
+No need to include it as part of resource name.
+
+.Avoid having pageable like this:
+[source,http]
+----
+GET /orders/pageable
+----
+

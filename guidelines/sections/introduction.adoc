@@ -1,0 +1,23 @@
+== Introduction
+
+Our services evolved into various microservices, with each team taking responsibility for their own APIs.
+We've embraced an "API First" approach, meaning development begins with defining the API, which is then reviewed before any implementation begins.
+By following this process, we ensure that all our APIs have a consistent look and feel, as if they were created by a single person.
+
+In case guidelines are changing
+
+
+=== Conventions used in these guidelines
+
+[.danger]#*MUST*#: Indicates a requirement that must be followed.
+
+[.warning]#*SHOULD*#: Indicates a recommendation that should be followed unless there is a good reason not to.
+
+[.success]#*MAY*#: Indicates an optional suggestion that may be followed if deemed appropriate.
+
+=== In case guidelines are changing
+
+When guidelines are changing, we have to consider the following:
+
+- Existing APIs don’t have to be changed, but we recommend it
+- New APIs have to respect the current guidelines

@@ -1,0 +1,15 @@
+== General
+
+=== [.danger]#MUST# follow API-first approach
+
+We design the API using our link:https://gitlab.com/container-xchange/shared/apis[APIs] Project.
+After creating the merge-request, the pipeline will automatically generate interfaces for both BE & FE that will be used for the implementation.
+
+[.warning]#SHOULD# not start the implementation before the API is reviewed.
+
+=== [.danger]#MUST# get approval before merging
+
+Before merging the API, it must be reviewed by the team and get *at least* one approval.
+
+
+

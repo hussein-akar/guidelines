@@ -1,0 +1,14 @@
+:stylesheet: ./styles/styles.css
+
+:toc:
+
+= Rest API Guidelines
+
+include::sections/introduction.adoc[]
+
+include::sections/general.adoc[]
+
+include::sections/urls.adoc[]
+
+include::sections/pagination.adoc[]
+

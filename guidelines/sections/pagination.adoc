@@ -1,0 +1,104 @@
+== Pagination
+
+=== [.danger]#MUST# use pagination
+
+Pagination is a common way to break up a large set of data into smaller, more manageable chunks.
+We couldn't control how data grows, but we can control how we present it to the user.
+We should never return all the data at once, as it can be overwhelming and slow down the client application.
+
+We are using 3 type of page iteration techniques:
+
+- *Offset-based pagination:*
+
+- *Cursor-based pagination:*
+
+- *Keyset-based pagination (seek method):*
+
+==== Offset-based pagination
+
+This technique involves using two parameters: "offset" and "limit." The "offset" parameter determines the starting point or position in the dataset, while the "limit" parameter specifies the maximum number of records to include on each page.
+
+.Get the first 10 orders (offset: 0):
+[source,httprequest]
+----
+GET /orders?offset=0&limit=10
+----
+
+.Get the next 10 orders (offset: 1):
+[source,http]
+----
+GET /orders?offset=1&limit=10
+----
+
+==== Cursor-based pagination
+
+Instead of relying on numeric offsets, cursor-based pagination uses a unique identifier or token to mark the position in the dataset.
+The API consumer includes the cursor value in subsequent requests to fetch the next page of data.
+
+This approach ensures stability when new data is added or existing data is modified.
+The cursor can be based on various criteria, such as a timestamp, a primary key, or an encoded representation of the record.
+
+.Get the first 10 orders:
+[source,httprequest]
+----
+GET /orders?cursor=eyJpZCI6Mn0
+----
+
+==== Keyset-based pagination (seek method)
+
+Keyset pagination, or the seek method, is tailored for scenarios that involve large or frequently-updated data sets.
+It involves using a specific field (or set of fields) as a key to paginate through the data set.
+This key is usually a unique and sequentially ordered column—for example, a timestamp or an auto-incrementing ID.
+
+
+.Get 10 record after the order with ID 5:
+[source,httprequest]
+----
+GET /orders?after_order_id=5&limit=10
+----
+
+
+.Get 15 record before the order with ID 50:
+[source,httprequest]
+----
+GET /orders?before_order_id=50&limit=15
+----
+
+
+.Get 20 records updated after the timestamp:
+[source,httprequest]
+----
+
+GET /orders?updated_after=2024-01-01T00:00:00Z&limit=20
+----
+
+
+=== [.warning]#SHOULD# provide default values for pagination parameters
+
+When designing a paginated API, it's a good practice to provide default values for the pagination parameters.
+
+=== [.warning]#SHOULD# limit upper bound of the limit
+
+Having no upper-bound limit could result with same performance issue if users sent limit with 10000 for example.
+A max limit of 100 is considered a reasonable number.
+
+
+.API Spec
+[source,yaml]
+----
+paths:
+  /orders:
+    get:
+      summary: Get List of Orders
+      description: Returns a list of orders for logged in user
+      parameters:
+        - name: limit
+          in: query
+          required: true
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 100
+          description: The number of records to return
+
+----
